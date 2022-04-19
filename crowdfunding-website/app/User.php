@@ -2,38 +2,21 @@
 
 namespace App;
 
+use App\Services\HashUuid;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
+
 
 class User extends Authenticatable
 {
-    use Notifiable;
-    // protected $primaryKey = 'id';
-    // protected $keyType = 'string';
-    // public $incrementing = false;
-
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function ($model) {
-            if (empty($model->{$model->getKeyName()})) {
-                $model->{$model->getKeyName()} = (string) Str::uuid();
-            }
-        });
-    }
+    use Notifiable, HashUuid;
 
     public function getIncrementing()
     {
         return false;
     }
 
-    /**
-     * Get the auto-incrementing key type.
-     *
-     * @return string
-     */
     public function getKeyType()
     {
         return 'string';
@@ -51,12 +34,9 @@ class User extends Authenticatable
         'password',
     ];
 
-
-
     protected $hidden = [
         'password', 'remember_token',
     ];
-
 
     protected $casts = [
         'email_verified_at' => 'datetime',
