@@ -15,7 +15,7 @@ class CreateOtpCodesTable extends Migration
     {
         Schema::create('otp_codes', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedBigInteger('user_id');
+            $table->char('user_id', 150);
             $table->string('otp');
             $table->date('valid_until');
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
-class isAdmin
+class CheckRegister
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,8 @@ class isAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->isSuperAdmin()) {
+        $curent_date = Carbon::now()->day;
+        if ($curent_date >= 1 && $curent_date <= 10) {
             return $next($request);
         }
         return abort(403);
