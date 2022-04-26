@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\OtpCode;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,16 +13,16 @@ class UserRegisterMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $user;
+    protected $otp;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(OtpCode $otp)
     {
-        $this->user = $user;
+        $this->otp = $otp;
     }
 
     /**
@@ -33,7 +34,7 @@ class UserRegisterMail extends Mailable
     {
         return $this->from('noreplay@batkunda.com')
             ->view('send_email_notif')->with([
-                'good' => $this->user->name,
-            ]);;
+                'otp' => $this->otp->otp,
+            ]);
     }
 }

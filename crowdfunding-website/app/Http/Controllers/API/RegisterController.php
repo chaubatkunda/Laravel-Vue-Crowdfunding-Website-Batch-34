@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\UserRegisterEvent;
 use App\Http\Controllers\Controller;
+use App\Listeners\SendEmailRegister;
 use App\Mail\UserRegisterMail;
 use App\OtpCode;
 use App\User;
@@ -28,19 +30,19 @@ class RegisterController extends Controller
         ]);
         $ex = date('Y-m-d', strtotime("+1 days"));
 
-        $user =  User::create([
+        $user = User::create([
             'role_id'   => 0,
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        Mail::to($user->email)->send(new UserRegisterMail($user));
-        OtpCode::create([
+        $otp = OtpCode::create([
             'user_id'   => $user->id,
             'otp'       => mt_rand(0000, 9999),
             'valid_until'   => $ex
         ]);
+        event(new UserRegisterEvent($otp));
 
         return response()->json([
             'status' => 'success'

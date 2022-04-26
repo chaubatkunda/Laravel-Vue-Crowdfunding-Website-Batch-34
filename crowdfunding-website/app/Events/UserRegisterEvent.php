@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\OtpCode;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -19,9 +20,11 @@ class UserRegisterEvent
      *
      * @return void
      */
-    public function __construct()
+
+    public $otp;
+    public function __construct(OtpCode $otp)
     {
-        //
+        $this->otp = $otp;
     }
 
     /**

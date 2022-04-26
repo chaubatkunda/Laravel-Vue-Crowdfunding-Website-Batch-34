@@ -1,1 +1,1 @@
-<h2>Selamat {{ $good }}</h2>
+<h2>Selamat {{ $otp }}</h2>
