@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>Vue Js</title>
+</head>
+
+<body>
+    <div id="app">
+    <!-- App.vue -->
+    
+    <v-app>
+        <v-navigation-drawer app>
+        <v-list-item>
+            <v-list-item-content>
+                <v-list-item-title class="text-h6">
+                    Sanbarcode
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                    Quis-3
+                </v-list-item-subtitle>
+            </v-list-item-content>
+        </v-list-item>
+        
+        <v-divider></v-divider>
+        
+        <v-list dense nav>
+            <v-list-item v-for="item in items" :key="item.title" link>
+                <v-list-item-icon>
+                    <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-icon>
+        
+                <v-list-item-content>
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list>
+        </v-navigation-drawer>
+    
+        <v-app-bar app>
+        <v-toolbar-title>Donate: 
+            <v-icon aria-hidden="false">
+                mdi-forum
+            </v-icon> {{ counter }}
+        </v-toolbar-title>
+        </v-app-bar>
+    
+        <!-- Sizes your content based upon application components -->
+        <v-main>
+            <!-- Provides the application the proper gutter -->
+            <v-container fluid>
+                <!-- If using vue-router -->
+                <router-view></router-view>
+                <v-card :loading="loading" class="mx-auto my-12" max-width="374">
+                    <template slot="progress">
+                        <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
+                    </template>
+                
+                    <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+                
+                    <v-card-title>Cafe Badilico</v-card-title>
+                
+                    <v-card-text>
+                        <v-row align="center" class="mx-0">
+                            <v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
+                
+                            <div class="grey--text ms-4">
+                                4.5 (413)
+                            </div>
+                        </v-row>
+                        <div class="my-4 text-subtitle-1">
+                            $ • Italian, Cafe
+                        </div>
+                        <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
+                    </v-card-text>
+                    <v-divider class="mx-4"></v-divider>
+                    <v-card-title>Tonight's availability</v-card-title>
+                
+                
+                    <v-card-actions >
+                        <v-btn  block class="ma-2" outlined color="indigo" v-on:click="increment()">
+                            Donate <v-icon dark right>
+                                mdi-checkbox-marked-circle
+                            </v-icon>
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-container>
+        </v-main>
+    
+        <v-footer app>
+            <!-- -->
+        </v-footer>
+    </v-app>
+        <!-- <router-view></router-view> -->
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+    <script>
+        const store = new Vuex.Store({
+            state: {
+                counter: 0
+            },
+            mutations: {
+                increment(state){
+                    state.counter++
+                }
+            }
+        })
+        const routes = []
+        const router = new VueRouter({
+                routes
+            })
+        var app = new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            router,
+            store,
+            data() {
+                return {
+                    items: [
+                        { title: 'Home', icon: 'mdi-view-dashboard' },
+                        { title: 'Donasi', icon: 'mdi-forum' },
+                    ],
+                    links: ['Home', 'Contacts', 'Settings'],
+                    mini: true,
+                }
+            },
+            computed: {
+                counter(){
+                    return this.$store.state.counter
+                }
+            },
+            methods: {
+                increment(){
+                    store.commit('increment')
+                    console.log("Ok")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
